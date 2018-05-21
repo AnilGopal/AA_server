@@ -72,7 +72,8 @@ class Purchase(APIView):
             member = Member.objects.get(name=member)
             pp = PromoPurchase(promo=promo, member=member)
             pp.save()
-            return Response({'status': True})
+            qty = len(PromoPurchase.objects.filter(promo=promo, member=member))
+            return Response({'status': True, 'qty': qty})
         except Exception as e:
             return Response({'status': False,
                              'msg': "Error in purchasing promos"})
@@ -92,10 +93,13 @@ class Transfer(APIView):
             member = Member.objects.get(name=member)
             pp = PromoPurchase.objects.filter(promo=promo, member=member)
             if pp:
+                qty = len(pp)
                 pp[0].delete()
+            else:
+                return Response({'status': False, 'msg': "You do not have promos to gift"})
             pp_new = PromoPurchase(promo=promo, member=member_to)
             pp_new.save()
-            return Response({'status': True})
+            return Response({'status': True, 'qty': qty})
         except Exception as e:
             return Response({'status': False,
-                             'msg': "Error in purchasing promos"})
+                             'msg': "Error in Gifting promo"})

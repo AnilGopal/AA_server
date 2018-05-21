@@ -6,5 +6,5 @@ urlpatterns = [
     url(r'^all/$', PromosList.as_view()),
     url(r'^detail/$', PromoDetail.as_view()),
     url(r'^buy/$', Purchase.as_view()),
-    url(r'^give/$', Transfer.as_view()),
+    url(r'^gift/$', Transfer.as_view()),
 ]
