@@ -4,6 +4,7 @@ from rest_framework import authentication, permissions
 from .models import Member
 from rest_framework import status
 
+
 class Login(APIView):
 
     def post(self, request, format=None):
@@ -15,7 +16,7 @@ class Login(APIView):
             pwd = str(request.data.get('password'))
             member = Member.objects.get(name=username)
             if member.password == pwd:
-                response = Response({'status':True})
+                response = Response({'status':  True})
             else:
                 response = Response({'status':False, 'msg':"Incorrect Credentials"})
             return response

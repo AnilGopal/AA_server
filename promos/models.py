@@ -14,6 +14,9 @@ class Promo(models.Model):
     validtill = models.DateTimeField(null=True)
     amount = models.IntegerField(null=False)
 
+    def __str__(self):
+        return self.code
+
 
 class PromoPurchase(models.Model):
     promo = models.ForeignKey(Promo, on_delete=models.CASCADE)
