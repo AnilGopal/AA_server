@@ -91,9 +91,14 @@ class Transfer(APIView):
         try:
             promo = Promo.objects.get(code=code)
             member = Member.objects.get(name=member)
+            member_to = Member.objects.filter(name=member_to)
+            if not member_to:
+                return Response({'status': False, 'msg': "Member doesnt exist"})
+            else:
+                member_to = member_to[0]
             pp = PromoPurchase.objects.filter(promo=promo, member=member)
             if pp:
-                qty = len(pp)
+                qty = len(pp)-1
                 pp[0].delete()
             else:
                 return Response({'status': False, 'msg': "You do not have promos to gift"})
